@@ -69,6 +69,21 @@ abstract class AbstractRestfulController extends AbstractController
      * @return mixed
      */
     abstract public function delete($id);
+    
+    /**
+     * Return options for list of resources
+     *
+     * @return mixed
+     */
+    abstract public function optionsList();
+
+    /**
+     * Return options for single resource
+     *
+     * @param  mixed $id
+     * @return mixed
+     */
+    abstract public function options($id);    
 
     /**
      * Basic functionality for when a page is not available
@@ -164,6 +179,20 @@ abstract class AbstractRestfulController extends AbstractController
                     }
                     $action = 'delete';
                     $return = $this->delete($id);
+                    break;
+                case 'options':
+                    if (null !== $id = $routeMatch->getParam('id')) {
+                        $action = 'options';
+                        $return = $this->options($id);
+                        break;
+                    }
+                    if (null !== $id = $request->getQuery()->get('id')) {
+                        $action = 'options';
+                        $return = $this->options($id);
+                        break;
+                    }
+                    $action = 'optionsList';
+                    $return = $this->optionsList();
                     break;
                 default:
                     throw new Exception\DomainException('Invalid HTTP method!');

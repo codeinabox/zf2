@@ -60,6 +60,33 @@ class RestfulControllerTest extends TestCase
         $this->assertEquals($entity, $result['entity']);
         $this->assertEquals('get', $this->routeMatch->getParam('action'));
     }
+    
+    public function testDispatchInvokesOptionsListWhenNoActionPresentAndNoIdentifierOnOptions()
+    {
+        $entities = array(
+            new stdClass,
+            new stdClass,
+            new stdClass,
+        );
+        $this->request->setMethod('OPTIONS');
+        $this->controller->entities = $entities;
+        $result = $this->controller->dispatch($this->request, $this->response);
+        $this->assertArrayHasKey('entities', $result);
+        $this->assertEquals($entities, $result['entities']);
+        $this->assertEquals('optionsList', $this->routeMatch->getParam('action'));
+    }
+
+    public function testDispatchInvokesOptionsMethodWhenNoActionPresentAndIdentifierPresentOnOptions()
+    {
+        $entity = new stdClass;
+        $this->request->setMethod('OPTIONS');
+        $this->controller->entity = $entity;
+        $this->routeMatch->setParam('id', 1);
+        $result = $this->controller->dispatch($this->request, $this->response);
+        $this->assertArrayHasKey('entity', $result);
+        $this->assertEquals($entity, $result['entity']);
+        $this->assertEquals('options', $this->routeMatch->getParam('action'));
+    }    
 
     public function testDispatchInvokesCreateMethodWhenNoActionPresentAndPostInvoked()
     {

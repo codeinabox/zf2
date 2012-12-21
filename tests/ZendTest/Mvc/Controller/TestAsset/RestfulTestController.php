@@ -37,6 +37,27 @@ class RestfulTestController extends AbstractRestfulController
     {
         return array('entity' => $this->entity);
     }
+    
+    /**
+     * Return list of resources options
+     *
+     * @return mixed
+     */
+    public function optionsList()
+    {
+        return array('entities' => $this->entities);
+    }
+
+    /**
+     * Return single resource options
+     *
+     * @param  mixed $id
+     * @return mixed
+     */
+    public function options($id)
+    {
+        return array('entity' => $this->entity);
+    }    
 
     /**
      * Create a new resource
