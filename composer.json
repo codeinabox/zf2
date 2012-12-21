@@ -1,5 +1,6 @@
 {
     "name": "zendframework/zendframework",
+    "version": "dev-options-fix",
     "description": "Zend Framework 2",
     "type": "library",
     "keywords": [
